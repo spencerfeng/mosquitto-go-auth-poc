@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  mosquitto:
+    image: iegomez/mosquitto-go-auth
+    container_name: mosquitto-go-auth-poc-mosquitto
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/mosquitto.conf
+      - ./mosquitto/scripts/acl_script.js:/mosquitto/scripts/acl_script.js
+      - ./mosquitto/scripts/parsed_user_script.js:/mosquitto/scripts/parsed_user_script.js
+      - ./mosquitto/scripts/superuser_script.js:/mosquitto/scripts/superuser_script.js
+    command: /usr/sbin/mosquitto -c /mosquitto/mosquitto.conf
+    networks:
+      - mosquitto-go-auth-poc
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+      - "1880:1880"
+
+networks:
+  mosquitto-go-auth-poc:
+    name: mosquitto-go-auth-poc-network
+
